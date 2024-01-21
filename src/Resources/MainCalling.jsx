@@ -4,6 +4,7 @@ import HomePageView from "./Components/HomeComponent/HomeComponent"
     return(
         <>
         <UserDetails></UserDetails>
+        
         </>
     )
  }
