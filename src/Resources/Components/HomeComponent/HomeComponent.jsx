@@ -1,53 +1,42 @@
 
  import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
+
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useState } from 'react';
 import  '../../../App.js';
+import Account from './Images/Account.jpg';
+import Credit_card from './Images/Credit_card.jpg';
+import loan from './Images/loan.png';
+import { Link, useNavigate } from "react-router-dom"
 
-const imageData = [
-    {
-      label: "Image1",
-      alt: "image1",
-      url:"./Images/Account.jpg"
-    },
-    {
-      label: "Image 2",
-      alt: "image2",
-      url:"./Images/Credit_card.jpg"
-    },
-    {
-      label: "Image 3",
-      alt: "image3",
-      url: "./Images/loan.png"
-    }
-  ];
 
-  const renderSlides = imageData.map((image) => (
-    <div key={image.alt}>
-      <img src={image.url} alt={image.alt} />
-      <p className="legend">{image.label}</p>
-    </div>
-  ));
 
   export default function HomePageView() {
-    const [currentIndex, setCurrentIndex] = useState();
-    function handleChange(index) {
-      setCurrentIndex(index);
+
+    const navigate=useNavigate();
+    function onloanClick(){
+      navigate("/usd");
     }
     return (
-      <div className="dataInImage">
-        <Carousel
-          showArrows={true}
-          autoPlay={true}
-          infiniteLoop={true}
-          selectedItem={imageData[currentIndex]}
-          onChange={handleChange}
-          className="carousel-container"
-        >
-          {renderSlides}
-        </Carousel>
-      </div>
+    
+    <>
+    <nav className="navbar bg-body-tertiary">
+  <div className="container-fluid  justify-content-center align-items-center">
+    <span className="navbar-brand mb-40 h1 ">Welcome To  MKBK</span>
+  </div>
+</nav>
+
+          <div className='ImageTable'>
+            <table>
+             <th>
+              <Link to="/usd"><img src={Account} alt="Logo" height={'300px'} width={'500px'} /></Link>
+              </th> 
+             <th><img src={Credit_card} alt="Logo" height={'300px'} width={'500px'} /></th>
+             <th><img src={loan} alt="Logo" height={'300px'} width={'500px'} /></th>
+            </table>
+
+          </div>
+        
+          </>
     );
   }
   

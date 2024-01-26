@@ -38,6 +38,16 @@
 .carousel-container {
   max-width: 750px;
 }
+.row {
+  content: "";
+  clear: both;
+  display: table;
+}
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
 
 .ConsolidateUserdetails {
 margin-top: 100px;

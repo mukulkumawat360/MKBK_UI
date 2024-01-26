@@ -1,5 +1,6 @@
  import { useState } from "react"
 import {retriveUserExistance} from "./LoginApiService"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -7,7 +8,7 @@ import {retriveUserExistance} from "./LoginApiService"
 
   export default function  Loginpage(){
     
- 
+    const navigate = useNavigate();
     const [checkUser,UpdateUser] = useState(" Lets Check You Are Existing Of Not ")
     
     const[requestdata,UpdatedRequest]=useState({
@@ -32,8 +33,15 @@ import {retriveUserExistance} from "./LoginApiService"
       .then((response)=>UpdateUser(response.data))
       .catch((error)=>console.log(error))
       .finally(()=>console.log("cleanup"))
-
+if(checkUser=="Y"){
+  console.log("Routing to next Stage");
+  navigate("/welcome");
+}else{
+  navigate("/login");
+}
     }
+
+
 
 return(
 
@@ -44,9 +52,9 @@ return(
     <span className="navbar-brand mb-40 h1 ">Welcome To  MKBK</span>
   </div>
 </nav>
-    <div class="container h-100">
-    <div class="row h-100 justify-content-center align-items-center" style={{marginTop:"100px"}}>
-        <div class="col-10 col-md-8 col-lg-6">
+    <div className="container h-100">
+    <div className="row h-100 justify-content-center align-items-center" style={{marginTop:"100px"}}>
+        <div className="col-10 col-md-8 col-lg-6">
 
  <form  >
   
@@ -66,9 +74,7 @@ return(
 
 
 </form>
-<div  className="userExistingPrompt">
-  {checkUser}
-</div>
+
 </div>
 </div>
 </div>
