@@ -3,9 +3,9 @@
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import  '../../../App.js';
-import Account from './Images/Account.jpg';
-import Credit_card from './Images/Credit_card.jpg';
-import loan from './Images/loan.png';
+import Account from '../Images/Account.jpg';
+import Credit_card from '../Images/Credit_card.jpg';
+import loan from '../Images/loan.png';
 import { Link, useNavigate } from "react-router-dom"
 
 

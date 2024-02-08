@@ -63,3 +63,13 @@ margin-left: 100px;
     transform: rotate(360deg);
   }
 }
+.error-message{
+  color:red;
+  margin-top: 2px;
+  font-size: 12px;
+}
+.success-message{
+  color:green;
+  margin-top: 2px;
+  font-size: 12px;
+}
