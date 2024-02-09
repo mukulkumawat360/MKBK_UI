@@ -10,7 +10,7 @@ import loginbg from '../Images/loginbg.svg';
     
     const navigate = useNavigate();
     const [checkUser,UpdateUser] = useState(" Lets Check You Are Existing Of Not ")
-    
+    const [loginMessage,setloginMessage]=useState("");
     const[requestdata,UpdatedRequest]=useState({
       srno:"1",
       username:"",
@@ -32,13 +32,17 @@ console.log(requestdata);
       event.preventDefault();
     console.log(requestdata)
       retriveUserExistance(requestdata)
-      .then((response)=>UpdateUser(response.data))
+      .then((response)=>{
+        UpdateUser(response.data);
+        console.log(response);
+      })
       .catch((error)=>console.log(error))
       .finally(()=>console.log("cleanup"))
 if(checkUser=="Y"){
   console.log("Routing to next Stage");
   navigate("/welcome");
 }else{
+  setloginMessage("Username or Password is Wrong");
   navigate("/login");
 }
     }
@@ -56,9 +60,9 @@ return(
     <div className="col-lg-6 bg-gray p-5 text-center">
       <h4 className="text-center fw-bolder fs-2">Register</h4>
       <p className="mb-3 fs-7">Register Now and Fell the New Digital World</p>
-      <a href="register.html">
-        <button className="btn fw-bold mb-5 btn-outline-success px-4 rounded-pill">Sign Up</button>
-      </a>
+      
+        <button className="btn fw-bold mb-5 btn-outline-success px-4 rounded-pill" onClick={()=>{navigate("/signup")}}>Sign Up</button>
+     
       <div className="img-cover p-4">
         <img src={loginbg} alt="" />
       </div>
@@ -66,6 +70,7 @@ return(
     <div className="col-lg-6 p  vh-100">
       <div className="row d-flex vh-100">
         <div className="col-md-8 p-4 ikigui m-auto text-center align-items-center">
+          <p>{loginMessage}</p>
           <h4 className="text-center fw-bolder mb-4 fs-2">Login</h4>
           <div className="input-group mb-4">
             <span className="input-group-text border-end-0 inbg" id="basic-addon1"><i className="bi bi-person" /></span>

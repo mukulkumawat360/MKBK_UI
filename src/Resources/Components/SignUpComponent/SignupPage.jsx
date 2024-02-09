@@ -3,8 +3,10 @@ import loginbg from '../Images/loginbg.svg';
 import  "../../../App.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
-export default function SignupPageTemp() {
+import { retriveUserSignUp } from './SignUpPageApi';
 
+export default function SignupPageTemp() {
+  const [ResponseMessage,SetResponseMessage]=useState("New user");
     const navigate = useNavigate();
 const [formInput,setformInput]=useState({
     firstName:"",
@@ -14,6 +16,8 @@ const [formInput,setformInput]=useState({
     confirmpassword:"",
     success:""
 });
+
+
 
 const [formError,setformError]=useState({
     firstName:"",
@@ -29,7 +33,7 @@ const handleUserInput =(name,value)=>{
         [name]:value
     });
 
-    console.log(formInput);
+    
 };
     const ValidateFormInput=(event)=>{ 
 
@@ -45,16 +49,16 @@ const handleUserInput =(name,value)=>{
         if(!formInput.firstName && !formInput.email && !formInput.password){
             setformError({
                 ...inputError,
-                firstName:"Name can not be empty ",
-                email:"Email can not be empty",
-                password:"Password can not be empty"
+                firstName:"!Name can not be empty ",
+                email:"!Email can not be empty",
+                password:"!Password can not be empty"
             });
             return;
         }
         if(!formInput.firstName ){
             setformError({
                 ...inputError,
-                firstName:"Name can not be empty "
+                firstName:"!Name can not be empty "
             });
             return;
         }
@@ -62,7 +66,7 @@ const handleUserInput =(name,value)=>{
             setformError({
                 ...inputError,
 
-                email:"Email can not be empty"
+                email:"!Email can not be empty"
             
             });
             return;
@@ -71,7 +75,7 @@ const handleUserInput =(name,value)=>{
             setformError({
                 ...inputError,
  
-                password:"Password can not be empty"
+                password:"!Password can not be empty"
             });
             return;
         }
@@ -86,14 +90,49 @@ const handleUserInput =(name,value)=>{
         }
 
         setformError(inputError);
+        onSignUpSubmit(event);
 
-        setformInput((prevState)=>({
+        if(ResponseMessage=="Exists"){
+          console.log("inside exists");
+          setformInput((prevState)=>({
             ...prevState,
-            success:"Your are Successfully Signed In"
+            success:"User Already Exists"
+            
             }));
+         
+          navigate("/signup");
+        }else{
+          setformInput((prevState)=>({
+            ...prevState,
+            success:"Successfully registered!"
+            
+            }));
+          
+        }
 
-            navigate("/login");
+
+            
+            
+           
+            
      }
+
+
+function onSignUpSubmit(event){
+
+  event.preventDefault();
+  retriveUserSignUp(formInput)
+  .then((response)=>{
+    SetResponseMessage(response.data);
+    console.log("data from request"+response.data);
+  })
+  .catch((error)=>console.log(error))
+  .finally(()=>console.log("cleanup"))
+
+
+
+  
+}
 
 
     return (
@@ -104,7 +143,7 @@ const handleUserInput =(name,value)=>{
             <div className="col-lg-6 bg-gray p-5 text-center">
               <h4 className="text-center fw-bolder fs-2">Login</h4>
               <p className="mb-3 fs-7">Already gave an account ?</p>
-              <a href="index.html"><button className="btn fw-bold mb-5 btn-outline-success px-4 rounded-pill">log In</button></a>
+             <button className="btn fw-bold mb-5 btn-outline-success px-4 rounded-pill" onClick={()=>{navigate("/login")}}>log In</button>
               <div className="img-cover p-4">
                 <img src={loginbg} alt="" />
               </div>
@@ -112,6 +151,7 @@ const handleUserInput =(name,value)=>{
             <div className="col-lg-6 p  vh-100">
               <div className="row d-flex vh-100">
                 <div className="col-md-8 p-4 ikigui m-auto text-center align-items-center">
+                  <p>{ResponseMessage}</p>
                   <h4 className="text-center fw-bolder mb-4 fs-2">Login</h4>
                   <div className="input-group mb-4">
                     <span className="input-group-text border-end-0 inbg" id="basic-addon1"><i className="bi bi-person" /></span>
